@@ -190,9 +190,9 @@ exec /bin/bash -c "plane_mode sync_led"
 #bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
 #bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
 
-bindsym XF86AudioMute exec --no-startup-id volume_main mute
-bindsym XF86AudioLowerVolume exec --no-startup-id volume_main -5%
-bindsym XF86AudioRaiseVolume exec --no-startup-id volume_main +5%
+bindsym XF86AudioMute exec --no-startup-id volume_main mute --then pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id volume_main -5% --then pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume_main +5% --then pkill -SIGRTMIN+10 i3blocks
 
 ## i3blocks : forcer la mise à jour du block RAM / cpu
 bindsym $mod+b exec --no-startup-id pkill -SIGRTMIN+12 i3blocks
@@ -209,3 +209,15 @@ bindsym $mod+F6 exec --no-startup-id screen_backlight inc > /dev/null 2>&1
 
 ## gestion du airplane mode
 bindcode 255 exec plane_mode toggle
+
+## gestion du multiscreen : on créé un mode pour ça
+# mode "mutli_screen" {
+
+#         bindsym o exec --no-startup-idi3-nagbar
+        
+#         # back to normal: Enter or Escape
+#         bindsym Return mode "default"
+#         bindsym Escape mode "default"
+# }
+
+# bindsym $mod+F8 mode "mutli_screen"
