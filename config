@@ -11,7 +11,7 @@
 
 ## commandes au démarrage
 
-exec feh --bg-fill --no-fehbg '/home/r2/Images/wallpapers/greatness_graffiti_v3_darker.jpg'
+exec feh --bg-scale --no-fehbg '/home/r2/Images/wallpapers/greatness_graffiti_v3_darker.jpg'
 
 set $mod Mod4
 
