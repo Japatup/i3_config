@@ -9,44 +9,47 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-## commandes au démarrage
+## 1) exec at boot ____
+exec_always feh --bg-fill --no-fehbg '/home/r2/Images/wallpapers/greatness_graffiti_v3_darker.jpg'
+exec /bin/bash -c "sleep 3; autokey > /dev/null 2>&1 &"
+exec /bin/bash -c "plane_mode sync_led"
 
-exec feh --bg-scale --no-fehbg '/home/r2/Images/wallpapers/greatness_graffiti_v3_darker.jpg'
-
-set $mod Mod4
-
-
+## 2) appearance ____
 # Font for window titles. Will also be used by the bar unless a different 
 # font is used in the bar {} block below.
 font pango:monospace 8
 
-# This font is widely installed, provides lots of unicode glyphs, 
-#right-to-left text rendering and scalability on retina/hidpi displays 
-#(thanks to pango).
-#font pango:DejaVu Sans Mono 8
+# définition des couleurs à appliquer
+set $bg-color             #15701c
+set $inactive-bg-color    #191d26
+set $text-color           #abeaac
+set $inactive-text-color  #676E7D
+set $urgent-bg-color      #e85e14
+set $indicator_color      #1a771a
+set $bar-background-color #061405
 
-# Before i3 v4.8, we used to recommend this one as the default: font 
-# -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1 The font above 
-# is very space-efficient, that is, it looks good, sharp and clear in small 
-# sizes. However, its unicode glyph coverage is limited, the old X core 
-# fonts rendering does not support right-to-left and this being a bitmap 
-# font, it doesn’t scale on retina/hidpi displays.
+# window colors
+## old : 
+# client.focused #6c71c4 #6c71c4 #fdf6e3 #6c71c4
+# client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
+# client.unfocused #073642 #073642 #93a1a1 #586e75
+# client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 
+#                       border             background         text                 indicator
+client.focused          $bg-color          $bg-color          $text-color          $indicator_color
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator_color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator_color
+client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator_color
+
+# Borders
+default_border normal 0
+# hide_edge_borders both
+
+## 3) layout manipulation / behavior ____
 # Use Mouse+$mod to drag floating windows to their wanted position
+set $mod Mod4
+
 floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
-# kill focused window
-#bindsym $mod+Shift+A kill
-bindsym $mod+q kill
-
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications 
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that 
-# installed. bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -80,6 +83,7 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+# popup_during_fullscreen leave_fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -98,37 +102,15 @@ bindsym $mod+p focus parent
 # focus the child container
 bindsym $mod+c focus child
 
-# switch to workspace
-bindsym $mod+ampersand workspace 1
-bindsym $mod+eacute workspace 2
-bindsym $mod+quotedbl workspace 3
-bindsym $mod+apostrophe workspace 4
-bindsym $mod+parenleft workspace 5
-bindsym $mod+minus workspace 6
-bindsym $mod+egrave workspace 7
-bindsym $mod+underscore workspace 8
-bindsym $mod+ccedilla workspace 9
-bindsym $mod+agrave workspace 10
+# kill focused window
+#bindsym $mod+Shift+A kill
+bindsym $mod+q kill
 
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+eacute move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+egrave move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+ccedilla move container to workspace 9
-bindsym $mod+Shift+agrave move container to workspace 10
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade 
-# i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications 
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that 
+# installed. bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -155,6 +137,125 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+## 4) keybindings : programs and system shortcuts ____
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+## 4.1) gestion du volume ____
+## old
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
+
+bindsym XF86AudioMute exec --no-startup-id volume_main mute --then pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id volume_main -5% --then pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume_main +5% --then pkill -SIGRTMIN+10 i3blocks
+
+## 4.2) i3blocks : forcer la mise à jour du block RAM / cpu ____
+bindsym $mod+b exec --no-startup-id pkill -SIGRTMIN+12 i3blocks
+
+## 4.3) gestion du rétroéclairage clavier ____
+bindsym XF86KbdBrightnessDown exec --no-startup-id kbd_backlight down 
+bindsym XF86KbdBrightnessUp exec --no-startup-id kbd_backlight up
+
+## 4.4) gestion du rétroéclairage écran ____
+## les touches dédiées ne son étonnament pas reconnues. On prend Win au lieu de Fn pour l'instant, à creuser
+#bindsym XF86MonBrightnessUp exec --no-startup-id screen_backlight up
+#bindsym XF86MonBrightnessDown exec --no-startup-id screen_backlight down
+bindsym $mod+F5 exec --no-startup-id screen_backlight dec > /dev/null 2>&1
+bindsym $mod+F6 exec --no-startup-id screen_backlight inc > /dev/null 2>&1
+
+## 4.5) gestion du airplane mode ____
+bindcode 255 exec plane_mode toggle
+
+## 5) workpaces____
+## icons for workspaces : 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+#
+
+## 5.1) definition of workspaces ____
+set $workspace1 "1: "
+set $workspace2 "2: "
+set $workspace3 "3: "
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "0: "
+
+## 5.2) switching to workspaces ____
+## pour switch rapide entre 2 workspaces (retour rapide au précédent sans avoir à préciser son numéro)
+workspace_auto_back_and_forth yes
+
+bindsym $mod+Tab workspace next
+bindsym $mod+shift+Tab workspace prev
+
+bindsym $mod+ampersand workspace $workspace1
+bindsym $mod+eacute workspace $workspace2
+bindsym $mod+quotedbl workspace $workspace3
+bindsym $mod+apostrophe workspace $workspace4
+bindsym $mod+parenleft workspace $workspace5
+bindsym $mod+minus workspace $workspace6
+bindsym $mod+egrave workspace $workspace7
+bindsym $mod+underscore workspace $workspace8
+bindsym $mod+ccedilla workspace $workspace9
+bindsym $mod+agrave workspace $workspace10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+eacute move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+egrave move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+ccedilla move container to workspace $workspace9
+bindsym $mod+Shift+agrave move container to workspace $workspace10
+
+## 5.3) les assigns ____
+## NB : use xprop to find windows infos : 
+## - classes (second part of the WM_CLASS)
+## - instances (first part of the WM_CLASS)
+## - titles (_NET_WM_NAME or WM_NAME)
+## see https://i3wm.org/docs/userguide.html#command_criteria and https://i3wm.org/docs/userguide.html#assign_workspace for more details
+assign [class="Firefox-esr" instance="Navigator"] $workspace2
+assign [class="Code" instance="code"] $workspace3
+assign [class="Thunderbird" instance="Mail"] $workspace10
+
+
+## 6) i3 commands ____
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade 
+# i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+## 7) i3bar config and appearance ____
 # Start i3bar to display a workspace bar (plus the system information 
 # i3status finds out, if available)
 bar {
@@ -162,7 +263,16 @@ bar {
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
   ## icone f142
   separator_symbol
+  colors {
+                background $bar-background-color
+                separator #388c2f
+                #                  border                background             text
+                focused_workspace  $bg-color             $bg-color              $text-color
+                inactive_workspace $bar-background-color $bar-background-color  $inactive-text-color
+                urgent_workspace   $urgent-bg-color      $urgent-bg-color       $text-color
+}
 
+## old
 #  colors {
 #     separator #268bd2
 #     background #002b36
@@ -173,42 +283,9 @@ bar {
 #     urgent_workspace #d33682 #d33682 #fdf6e3
 #   }
 }
-client.focused #6c71c4 #6c71c4 #fdf6e3 #6c71c4
-client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
-client.unfocused #073642 #073642 #93a1a1 #586e75
-client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 
 
-## mes execs
-exec /bin/bash -c "sleep 3; autokey > /dev/null 2>&1 &"
-exec /bin/bash -c "plane_mode sync_led"
 
-### mes raccourcis
-
-## gestion du volume
-#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
-#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
-#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
-
-bindsym XF86AudioMute exec --no-startup-id volume_main mute --then pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id volume_main -5% --then pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioRaiseVolume exec --no-startup-id volume_main +5% --then pkill -SIGRTMIN+10 i3blocks
-
-## i3blocks : forcer la mise à jour du block RAM / cpu
-bindsym $mod+b exec --no-startup-id pkill -SIGRTMIN+12 i3blocks
-
-## gestion du rétroéclairage clavier
-bindsym XF86KbdBrightnessDown exec --no-startup-id kbd_backlight down 
-bindsym XF86KbdBrightnessUp exec --no-startup-id kbd_backlight up
-
-## gestion du rétroéclairage écran ## les touches dédiées ne son étonnament pas reconnues. On prend Win au lieu de Fn pour l'instant, à creuser
-#bindsym XF86MonBrightnessUp exec --no-startup-id screen_backlight up
-#bindsym XF86MonBrightnessDown exec --no-startup-id screen_backlight down
-bindsym $mod+F5 exec --no-startup-id screen_backlight dec > /dev/null 2>&1
-bindsym $mod+F6 exec --no-startup-id screen_backlight inc > /dev/null 2>&1
-
-## gestion du airplane mode
-bindcode 255 exec plane_mode toggle
 
 ## gestion du multiscreen : on créé un mode pour ça
 # mode "mutli_screen" {
