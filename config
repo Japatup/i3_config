@@ -241,7 +241,7 @@ bindsym $mod+Shift+agrave move container to workspace $workspace10
 ## - instances (first part of the WM_CLASS)
 ## - titles (_NET_WM_NAME or WM_NAME)
 ## see https://i3wm.org/docs/userguide.html#command_criteria and https://i3wm.org/docs/userguide.html#assign_workspace for more details
-assign [class="Firefox-esr" instance="Navigator"] $workspace2
+assign [class="Firefox" instance="Navigator"] $workspace2
 assign [class="Code" instance="code"] $workspace3
 assign [class="Thunderbird" instance="Mail"] $workspace10
 
@@ -254,6 +254,17 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "power" {        
+        bindsym p exec --no-startup-id systemctl poweroff
+        
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+Escape mode "power"
+
 
 ## 7) i3bar config and appearance ____
 # Start i3bar to display a workspace bar (plus the system information 
