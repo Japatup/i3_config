@@ -42,8 +42,9 @@ client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator_color
 
 # Borders
-default_border normal 0
-# hide_edge_borders both
+# default_border normal 0 ## à insérer pour les versions > 4.13 à la place de new_window normal 0 qui sera deprecated
+new_window normal 0
+hide_edge_borders both
 
 ## 3) layout manipulation / behavior ____
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -159,7 +160,7 @@ bindsym XF86KbdBrightnessDown exec --no-startup-id kbd_backlight down
 bindsym XF86KbdBrightnessUp exec --no-startup-id kbd_backlight up
 
 ## 4.4) gestion du rétroéclairage écran ____
-## les touches dédiées ne son étonnament pas reconnues. On prend Win au lieu de Fn pour l'instant, à creuser
+## les touches dédiées ne sont étonnament pas reconnues. On prend Win au lieu de Fn pour l'instant, à creuser
 #bindsym XF86MonBrightnessUp exec --no-startup-id screen_backlight up
 #bindsym XF86MonBrightnessDown exec --no-startup-id screen_backlight down
 bindsym $mod+F5 exec --no-startup-id screen_backlight dec > /dev/null 2>&1
