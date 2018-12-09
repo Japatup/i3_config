@@ -242,9 +242,11 @@ bindsym $mod+Shift+agrave move container to workspace $workspace10
 ## - instances (first part of the WM_CLASS)
 ## - titles (_NET_WM_NAME or WM_NAME)
 ## see https://i3wm.org/docs/userguide.html#command_criteria and https://i3wm.org/docs/userguide.html#assign_workspace for more details
-assign [class="Firefox" instance="Navigator"] $workspace2
+# assign [class="Firefox" instance="Navigator"] $workspace2
+assign [class="Firefox"] $workspace2
 assign [class="Code" instance="code"] $workspace3
-assign [class="Thunderbird" instance="Mail"] $workspace10
+#assign [class="Thunderbird" instance="Mail"] $workspace10
+assign [class="Thunderbird"] $workspace10
 
 
 ## 6) i3 commands ____
