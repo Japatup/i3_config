@@ -142,6 +142,10 @@ bindsym $mod+r mode "resize"
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+## activate/desactivate autokey
+bindsym $mod+a exec --no-startup-id toggle_autokey
+
+
 ## 4.1) gestion du volume ____
 ## old
 #bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec --no-startup-id pkill -SIGRTMIN+10 i3blocks
