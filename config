@@ -138,6 +138,35 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+mode "multi_screen" {
+        bindsym u exec --no-startup-id multi_screen --main
+        bindsym o exec --no-startup-id multi_screen --guest
+        bindsym j exec --no-startup-id multi_screen --left
+        bindsym l exec --no-startup-id multi_screen --right
+        bindsym i exec --no-startup-id multi_screen --up
+        bindsym k exec --no-startup-id multi_screen --down
+        bindsym m exec --no-startup-id multi_screen --iso
+        bindsym Shift+u exec --no-startup-id multi_screen --audio_main
+        bindsym Shift+o exec --no-startup-id multi_screen --audio_guest
+
+        # same bindings, but for the arrow keys
+        bindsym Home exec --no-startup-id multi_screen --main
+        bindsym End exec --no-startup-id multi_screen --guest
+        bindsym Left exec --no-startup-id multi_screen --left
+        bindsym Right exec --no-startup-id multi_screen --right
+        bindsym Up exec --no-startup-id multi_screen --up
+        bindsym Down exec --no-startup-id multi_screen --down
+
+        bindsym Shift+Left exec --no-startup-id multi_screen --audio_main
+        bindsym Shift+Right exec --no-startup-id multi_screen --audio_guest
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+F8 mode "multi_screen"
+
 ## 4) keybindings : programs and system shortcuts ____
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
